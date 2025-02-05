@@ -55,6 +55,7 @@ function salvarEscala() {
     .catch((error) => {
       console.error("Erro ao salvar a escala:", error);
     });
+  atualizarCalendario();
 }
 
 function atualizarCalendario() {
