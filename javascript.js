@@ -1,41 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-import {
-  getDatabase,
-  ref,
-  set,
-  onValue,
-} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+const escalaRef = ref(database, "Escala");
 
-const firebaseConfig = {
-  apiKey: "API_KEY",
-  authDomain: "DOMÍNIO.firebaseapp.com",
-  databaseURL: "https://maxsystem-9fc4e-default-rtdb.firebaseio.com",
-  projectId: "PROJETO_ID",
-  storageBucket: "BUCKET.appspot.com",
-  messagingSenderId: "MENSAGEIRO_ID",
-  appId: "APP_ID",
-};
-
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
-
-const auth = getAuth();
-const provider = new GoogleAuthProvider();
-
-signInWithPopup(auth, provider)
-  .then((result) => {
-    alert("Logado com sucesso, " + result.user.displayName);
-  })
-  .catch((error) => {
-    console.error("Erro ao logar:", error);
-  });
-
-const escalaRef = ref(database, "escala");
 let escala = {};
 
 onValue(escalaRef, (snapshot) => {
@@ -46,16 +10,15 @@ onValue(escalaRef, (snapshot) => {
   }
 });
 
-function salvarEscala() {
-  console.log("Salvando escala no Firebase:", escala);
-  set(escalaRef, escala)
+function salvarEscala(dia, editores) {
+  const diaRef = ref(database, `Escala/${ano}-${mes}/${dia}`);
+  set(diaRef, editores)
     .then(() => {
-      console.log("Escala salva com sucesso.");
+      console.log(`Escala do dia ${dia} salva com sucesso.`);
     })
     .catch((error) => {
       console.error("Erro ao salvar a escala:", error);
     });
-  atualizarCalendario();
 }
 
 function atualizarCalendario() {
@@ -75,10 +38,13 @@ function atualizarCalendario() {
       select.appendChild(option);
     });
 
-    select.value = escala[`${dia}-${mes}`] || "";
+    const editoresDia = escala[`${ano}-${mes}`]?.[dia] || [];
+    select.value = editoresDia[0] || "";
+
     select.addEventListener("change", () => {
-      escala[`${dia}-${mes}`] = select.value;
-      salvarEscala();
+      const novoEditor = select.value;
+      const novosEditores = [novoEditor];
+      salvarEscala(dia, novosEditores);
     });
 
     tdEditor.appendChild(select);
@@ -87,7 +53,3 @@ function atualizarCalendario() {
     tbody.appendChild(tr);
   }
 }
-
-set(ref(database, "test"), { message: "Hello, Firebase!" })
-  .then(() => console.log("Teste bem-sucedido: Dados escritos no Firebase."))
-  .catch((error) => console.error("Erro no teste de conexão:", error));
