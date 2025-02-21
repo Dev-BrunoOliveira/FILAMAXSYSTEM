@@ -1,26 +1,14 @@
-import { database, ref, set, onValue } from "./firebase.js";
+import { ref, set, onValue, get, push } from "firebase/database";
+import { db } from "./firebaseConfig.js";
 
-const escalaRef = ref(database, "Escala");
 let escala = {};
 
-onValue(escalaRef, (snapshot) => {
-  const data = snapshot.val();
-  console.log("Dados recebidos do Firebase:", data); // Debug
-  if (data) {
-    escala = data;
-    atualizarCalendario();
-  }
-});
-
-function salvarEscala(dia, editores) {
-  const diaRef = ref(database, `Escala/${ano}-${mes}/${dia}`);
-  set(diaRef, { editores })
-    .then(() => {
-      console.log(`Escala do dia ${dia} salva com sucesso.`);
-    })
-    .catch((error) => {
-      console.error("Erro ao salvar a escala:", error);
-    });
+async function salvarEscala1() {
+  const escalaRef = push(ref(db, `Escala`));
+  await set(escalaRef, {
+    mes: "Fevereiro",
+    editor: "Bruno",
+  });
 }
 
 function atualizarCalendario() {
