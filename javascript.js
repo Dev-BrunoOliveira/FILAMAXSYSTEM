@@ -1,12 +1,10 @@
-import {ref, set, push, get} from "firebase/database";
+import { ref, set, push, get } from "firebase/database";
 import { db } from "./firebaseConfig.js";
 
-
 let escala = {};
-
 async function setScala() {
-  alert('Salvar')
-  return
+  alert("Salvar");
+  return;
   const escalaRef = push(ref(db, `Escala`));
   await set(escalaRef, {
     mes: "Fevereiro",
@@ -20,9 +18,6 @@ const editores = [
   "Ronei",
   "Flávia",
   "Chico",
-  "João",
-  "Maria",
-  "Pedro",
   "Folga",
   "Domingo",
   "Feriado",
@@ -48,8 +43,6 @@ const meses = [
 ];
 let mes = hoje.getMonth();
 const diasNoMes = 31;
-
-
 
 escala = JSON.parse(localStorage.getItem("escalaEditores")) || {};
 
@@ -77,11 +70,10 @@ function salvarEscala() {
 
   console.log("Escala formatada:", escalaArray);
 
-  setScala()
+  setScala();
 
   localStorage.setItem("escalaEditores", JSON.stringify(escala));
 }
-
 
 function atualizarCalendario() {
   tbody.innerHTML = "";
