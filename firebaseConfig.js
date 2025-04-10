@@ -2,17 +2,17 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBw4J5yRfyJcmIHibuDvgDPxTHbeFG2vi8",
-    authDomain: "banco-de-dados-c1bf1.firebaseapp.com",
-    databaseURL: "https://banco-de-dados-c1bf1-default-rtdb.firebaseio.com",
-    projectId: "banco-de-dados-c1bf1",
-    storageBucket: "banco-de-dados-c1bf1.firebasestorage.app",
-    messagingSenderId: "140489049491",
-    appId: "1:140489049491:web:7402193a3c779942731466",
-    measurementId: "G-86G2ZJXEJV"
-  };
+  apiKey: "AIzaSyDPabVh2gEo0KDCht37UIdXLH7uRERkMaQ",
+  authDomain: "fila-max.firebaseapp.com",
+  databaseURL: "https://fila-max-default-rtdb.firebaseio.com",
+  projectId: "fila-max",
+  storageBucket: "fila-max.firebasestorage.app",
+  messagingSenderId: "510563372182",
+  appId: "1:510563372182:web:9c7e98733c23f9e51cc6b7",
+  measurementId: "G-Y1F9VL0W81",
+};
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app); 
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 export { db };
