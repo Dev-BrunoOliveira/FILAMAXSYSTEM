@@ -3,8 +3,6 @@ import { db } from "./firebaseConfig.js";
 
 let escala = {};
 async function setScala() {
-  alert("Salvar");
-  return;
   const escalaRef = push(ref(db, `Escala`));
   await set(escalaRef, {
     mes: "Fevereiro",
