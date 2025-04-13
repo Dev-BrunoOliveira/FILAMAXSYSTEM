@@ -2,13 +2,6 @@ import { ref, set, push, get } from "firebase/database";
 import { db } from "./firebaseConfig.js";
 
 let escala = {};
-async function setScala() {
-  const escalaRef = push(ref(db, `Escala`));
-  await set(escalaRef, {
-    mes: "Fevereiro",
-    editor: "Bruno",
-  });
-}
 
 const editores = [
   " ",
@@ -39,10 +32,9 @@ const meses = [
   "Novembro",
   "Dezembro",
 ];
-let mes = hoje.getMonth();
-const diasNoMes = 31;
 
-escala = JSON.parse(localStorage.getItem("escalaEditores")) || {};
+let mes = hoje.getMonth();
+let diasNoMes = new Date(ano, mes + 1, 0).getDate(); //Com essa linha ele puxa todos os dias do mes com 0 dentro nos ()
 
 meses.forEach((nome, index) => {
   const option = document.createElement("option");
@@ -53,25 +45,10 @@ meses.forEach((nome, index) => {
 
 mesSelect.value = mes;
 
-function salvarEscala() {
-  let escalaArray = [];
-
-  for (let dia = 1; dia <= diasNoMes; dia++) {
-    if (escala[`${dia}-${mes}`]) {
-      escalaArray.push({
-        dia: dia,
-        mes: meses[mes],
-        editor: escala[`${dia}-${mes}`],
-      });
-    }
-  }
-
-  console.log("Escala formatada:", escalaArray);
-
-  setScala();
-
-  localStorage.setItem("escalaEditores", JSON.stringify(escala));
-}
+mesSelect.addEventListener("change", () => {
+  mes = parseInt(mesSelect.value);
+  diasNoMes = new Date(ano, mes + 1, 0).getDate();
+});
 
 function atualizarCalendario() {
   tbody.innerHTML = "";
@@ -93,9 +70,20 @@ function atualizarCalendario() {
     select.value = escala[`${dia}-${mes}`] || "";
     tdEditor.style.color = select.value ? "#50C878" : "red";
 
-    select.addEventListener("change", () => {
-      escala[`${dia}-${mes}`] = select.value;
-      salvarEscala();
+    select.addEventListener("change", async () => {
+      const editorSelecionado = select.value;
+      escala[`${dia}-${mes}`] = editorSelecionado;
+
+      const chave = `${ano}/${mes + 1}/${dia}`;
+
+      const escalaRef = ref(db, `Escala/${chave}`);
+      await set(escalaRef, {
+        dia: dia,
+        mes: meses[mes],
+        ano: ano,
+        editor: editorSelecionado,
+      });
+
       tdEditor.style.color = select.value ? "#50C878" : "red";
 
       const gif = document.getElementById("gif");
