@@ -48,6 +48,7 @@ mesSelect.value = mes;
 mesSelect.addEventListener("change", () => {
   mes = parseInt(mesSelect.value);
   diasNoMes = new Date(ano, mes + 1, 0).getDate();
+  carregandoInfo();
 });
 
 const carregandoInfo = async () => {
