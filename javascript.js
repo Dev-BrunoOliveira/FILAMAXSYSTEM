@@ -34,7 +34,7 @@ const meses = [
 ];
 
 let mes = hoje.getMonth();
-let diasNoMes = new Date(ano, mes + 1, 0).getDate(); //Com essa linha ele puxa todos os dias do mes com 0 dentro nos ()
+let diasNoMes = new Date(ano, mes + 1, 0).getDate();
 
 meses.forEach((nome, index) => {
   const option = document.createElement("option");
@@ -49,6 +49,22 @@ mesSelect.addEventListener("change", () => {
   mes = parseInt(mesSelect.value);
   diasNoMes = new Date(ano, mes + 1, 0).getDate();
 });
+
+const carregandoInfo = async () => {
+  const escalaRef = ref(db, `Escala/${ano}/${mes + 1}`);
+  const resultado = await get(escalaRef);
+  if (resultado.exists()) {
+    console.log("resultado é", resultado.val());
+    const dados = resultado.val();
+
+    Object.entries(dados).forEach(([index, registro]) => {
+      const dia = registro.dia;
+      escala[`${dia}-${mes}`] = registro.editor;
+      console.log("Escala agora é", escala);
+    });
+  }
+  atualizarCalendario();
+};
 
 function atualizarCalendario() {
   tbody.innerHTML = "";
@@ -74,9 +90,9 @@ function atualizarCalendario() {
       const editorSelecionado = select.value;
       escala[`${dia}-${mes}`] = editorSelecionado;
 
-      const chave = `${ano}/${mes + 1}/${dia}`;
+      const rota = `${ano}/${mes + 1}/${dia}`;
 
-      const escalaRef = ref(db, `Escala/${chave}`);
+      const escalaRef = ref(db, `Escala/${rota}`);
       await set(escalaRef, {
         dia: dia,
         mes: meses[mes],
@@ -105,4 +121,4 @@ mesSelect.addEventListener("change", () => {
   atualizarCalendario();
 });
 
-atualizarCalendario();
+carregandoInfo();
