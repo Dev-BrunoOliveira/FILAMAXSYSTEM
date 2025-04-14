@@ -22,16 +22,21 @@
     <h1>Escala MAXSYSTEM</h1>
     <label for="mesSelect">Selecione o mês:</label>
     <select id="mesSelect"></select>
+    <div class="escala" style="display: none">
+      <table>
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Editor Responsável</th>
+          </tr>
+        </thead>
+        <tbody id="calendario"></tbody>
+      </table>
+    </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Data</th>
-          <th>Editor Responsável</th>
-        </tr>
-      </thead>
-      <tbody id="calendario"></tbody>
-    </table>
+    <div class="loading" style="display: block">
+      <div class="carregando">CARREGANDO</div>
+    </div>
 
     <img id="gif" src="./img/caltongif.gif" alt="GIF de confirmação" />
 

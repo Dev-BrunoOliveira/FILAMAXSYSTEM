@@ -2,6 +2,7 @@ import { ref, set, push, get } from "firebase/database";
 import { db } from "./firebaseConfig.js";
 
 let escala = {};
+let carregando = true;
 
 const editores = [
   " ",
@@ -52,6 +53,8 @@ mesSelect.addEventListener("change", () => {
 });
 
 const carregandoInfo = async () => {
+  carregando = true;
+
   const escalaRef = ref(db, `Escala/${ano}/${mes + 1}`);
   const resultado = await get(escalaRef);
   if (resultado.exists()) {
@@ -63,7 +66,18 @@ const carregandoInfo = async () => {
       escala[`${dia}-${mes}`] = registro.editor;
       console.log("Escala agora é", escala);
     });
+
+    carregando = false;
+
+    if (!carregando) {
+      const tabela = document.querySelector(".escala");
+      tabela.style.display = "block";
+
+      const loading = document.querySelector(".loading");
+      loading.style.display = "none";
+    }
   }
+
   atualizarCalendario();
 };
 

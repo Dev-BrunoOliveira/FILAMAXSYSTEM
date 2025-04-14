@@ -1,5 +1,5 @@
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   background-color: #121212;
   background-image: url(/img/wallpaper.jpg);
   background-size: cover;
@@ -19,18 +19,18 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); 
-  backdrop-filter: blur(5px); 
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
   z-index: -1;
 }
 
 h1 {
-  color: #ffffff; 
+  color: #ffffff;
   font-size: 2em;
   margin-bottom: 20px;
 }
 
-label{
+label {
   padding: 10x;
 }
 
@@ -45,7 +45,8 @@ table {
   margin-top: 20px;
 }
 
-th, td {
+th,
+td {
   padding: 15px;
   text-align: center;
   border-bottom: 1px solid #9b1985;
@@ -69,6 +70,11 @@ select {
   background-color: #1e1e1e;
   color: white;
   cursor: pointer;
+}
+
+/*montar o carregamento*/
+carregando {  
+
 }
 
 select:hover {
@@ -95,21 +101,22 @@ footer span {
 
 @media (max-width: 480px) {
   h1 {
-      font-size: 1.2em;
+    font-size: 1.2em;
   }
 
   table {
-      width: 100%;
+    width: 100%;
   }
 
-  th, td {
-      padding: 8px;
-      font-size: 0.9em;
+  th,
+  td {
+    padding: 8px;
+    font-size: 0.9em;
   }
 
   select {
-      width: 100%;
-      font-size: 0.9em;
-      padding: 6px;
+    width: 100%;
+    font-size: 0.9em;
+    padding: 6px;
   }
 }
