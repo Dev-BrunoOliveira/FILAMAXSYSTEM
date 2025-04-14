@@ -35,24 +35,15 @@
     </div>
 
     <div class="loading" style="display: block">
-      <div class="carregando">CARREGANDO...</div>
-    </div>
+      <div class="carregamento">
+        <div class="loader"></div>
+        <p>Carregando...</p>
+      </div>
+      
+      <img id="gif" src="./img/caltongif.gif" alt="GIF de confirmação" />
 
-    <img id="gif" src="./img/caltongif.gif" alt="GIF de confirmação" />
-
-    <footer>
-      <span> &copy; Bruno Oliveira, 2025. Todos os direitos reservados. </span>
-    </footer>
-
-    <script>
-      window.addEventListener("load", function () {
-        const loader = document.getElementById("loader");
-        loader.style.opacity = "0";
-        setTimeout(() => {
-          loader.style.display = "none";
-        }, 500); // tempo pra animação sumir suavemente
-      });
-    </script>
-    
+      <footer>
+        <span> &copy; Bruno Oliveira, 2025. Todos os direitos reservados. </span>
+      </footer>
   </body>
 </html>
